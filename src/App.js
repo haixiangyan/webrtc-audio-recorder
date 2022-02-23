@@ -1,11 +1,31 @@
 import {useRef} from "react";
+import testAudio from './test.flac';
 
 const App = () => {
+  const audioRef = useRef(null);
   const canvasRef = useRef(null);
+
+  const play = async () => {
+    await audioRef.current.play();
+    const stream = audioRef.current.captureStream();
+    visualize(stream)
+  }
+
+  const playUrl = async () => {
+    const url = 'http://localhost:3000/static/media/test.912f161b068ec6db15fb.flac';
+    const audio = new Audio(url)
+    await audio.play();
+    const stream = audio.captureStream();
+    visualize(stream)
+  }
 
   const record = async () => {
     // 生成流
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+    visualize(stream)
+  }
+
+  const visualize = (stream, shouldOutput = false) =>  {
     // 创建解析器，以及音频上下文
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
     const analyser = audioCtx.createAnalyser()
@@ -14,7 +34,9 @@ const App = () => {
     const source = audioCtx.createMediaStreamSource(stream)
     source.connect(analyser)
     // 禁止输出，否会出现回音
-    // analyser.connect(audioCtx.destination);
+    if (shouldOutput) {
+      analyser.connect(audioCtx.destination);
+    }
 
     // 获取音频数据
     analyser.fftSize = 2048
@@ -70,8 +92,11 @@ const App = () => {
 
   return (
     <div className="App">
+      <audio ref={audioRef} src={testAudio} controls onPlay={() => play()} />
       <canvas ref={canvasRef} width={500} height={300}/>
-      <button onClick={record}>开始</button>
+      <button onClick={play}>播放</button>
+      <button onClick={playUrl}>播放URL</button>
+      <button onClick={record}>录音</button>
     </div>
   );
 }
