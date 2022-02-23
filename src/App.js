@@ -12,7 +12,7 @@ const App = () => {
   }
 
   const playUrl = async () => {
-    const url = '/static/media/test.912f161b068ec6db15fb.flac';
+    const url = 'https://github.yanhaixiang.com/webrtc-audio-visualization/webrtc-audio-visualization/static/media/test.912f161b068ec6db15fb.flac';
     const audio = new Audio(url)
     await audio.play();
     const stream = audio.captureStream();
