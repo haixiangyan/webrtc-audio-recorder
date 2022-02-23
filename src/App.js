@@ -12,7 +12,7 @@ const App = () => {
   }
 
   const playUrl = async () => {
-    const url = 'http://localhost:3000/static/media/test.912f161b068ec6db15fb.flac';
+    const url = '/static/media/test.912f161b068ec6db15fb.flac';
     const audio = new Audio(url)
     await audio.play();
     const stream = audio.captureStream();
