@@ -1,7 +1,9 @@
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import testAudio from './test.flac';
 
 const App = () => {
+  const [audioUrl, setAudioUrl] = useState(testAudio);
+
   const audioRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -90,13 +92,22 @@ const App = () => {
     draw()
   }
 
+  const onPreview = (e) => {
+    const [file] = e.target.files;
+
+    const url = URL.createObjectURL(file);
+
+    setAudioUrl(url);
+  }
+
   return (
     <div className="App">
-      <audio ref={audioRef} src={testAudio} controls onPlay={() => play()} />
+      <audio ref={audioRef} src={audioUrl} controls onPlay={() => play()} />
       <canvas ref={canvasRef} width={500} height={300}/>
       <button onClick={play}>播放</button>
       <button onClick={playUrl}>播放URL</button>
       <button onClick={record}>录音</button>
+      <input type="file" onChange={onPreview}/>
     </div>
   );
 }
