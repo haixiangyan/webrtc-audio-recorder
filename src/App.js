@@ -136,8 +136,8 @@ const App = () => {
       for (let i = 0; i < dataArray.length; i++) {
         const barHeight = dataArray[i];
 
-        canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',50,50)';
-        canvasCtx.fillRect(x, HEIGHT - barHeight / 2, barWidth, barHeight / 2);
+        canvasCtx.fillStyle = 'rgb(' + (barHeight + 100) + ',255,255)';
+        canvasCtx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
 
         x += barWidth + 1;
       }
