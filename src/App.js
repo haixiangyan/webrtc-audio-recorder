@@ -73,8 +73,8 @@ const App = () => {
 
       for (let i = 0; i < bufferLength; i++) {
 
-        const v = dataArray[i] / 128.0;
-        const y = v * HEIGHT / 2;
+        const v = dataArray[i] / 255.0;
+        const y = v * HEIGHT;
 
         if (i === 0) {
           canvasCtx.moveTo(x, y);
